@@ -1,9 +1,9 @@
 # Data Challenge Solution Doc
 
-This document provides with you step by step instruction about how to import and use Load_Insti_Info.py which performs data exporting, quality checks and analytical visulization; 
+This document provides step by step instruction about how to import and use Load_Insti_Info.py, which performs data export, data quality checks and analytical visulization; 
 
-Anaconda 4.3.1 python is used for scripting;
-packages required are as follow:
+Anaconda 4.3.1 python is used for coding;
+packages involved are as follow:
 
 ```
 import os
@@ -16,39 +16,41 @@ import datetime as dt
 ### QUATION 1: hmda_init() & hmda_to_json(data, states, conventional_conforming)
 
 #### Step1:
-unzip and place Load_Insti_Info.py the same place with two data files: 2012_to_2014_institutions_data.csv and 2012_to_2014_loans_data.csv
+unzip and place Load_Insti_Info.py the same directory with two data files: 2012_to_2014_institutions_data.csv and 2012_to_2014_loans_data.csv
 
 #### Step2:
 open a python IDLE and import Load_Insti_Info
 
 ```
 import os
-curr_dir='/where/is/the/csv/data/located'  # customize the dir value accordingly
+curr_dir='/where/is/the/Load_Insti_Info.py/located'  # customize the dir value accordingly
 os.chdir(curr_dir)
 from Load_Insti_Info import *
 ```
-Note: 'from Load_Insti_Info import *' will internally read the two csv files and load into two sqlite tables and compile two functions:
-hmda_init() & hmda_to_json(data, states, conventional_conforming) two be used for further steps;
+Note: 'from Load_Insti_Info import *' will read the two csv files and load into two sqlite tables and compile two functions:
+hmda_init() & hmda_to_json(data, states, conventional_conforming) two be used for further steps; this stpe might take 2-5 mins;
 
 #### Step3:
 Merge two dataset according and transform the result as a dataframe format
 ```
 data=hmda_init()
 ```
+Note: this step might take 3-5 mins;
+
 #### Step4:
-To use hmda_to_json() function to export the data accordingly with optional parameter as filters:
+To use hmda_to_json() function to export the dataframe to json with optional parameter as filters:
 ```
 log_output=hmda_to_json(data,output_nm='data.json',states='VA',conventional_conforming='all',year='2012,2013,2018')
 print log_output
 
 '''
 Function hmda_to_json() explanation:
-this function print out dataframe input to json formatted output based on parameter values you configured.
+this function export dataframe input to json formatted output based on parameter values you configured.
 log_output is a return var of the function which stores log info.
 
 Parameter list:
 # data: input dataframe
-# output_nm: give a name for output json file; output dir will be working directory
+# output_nm: give a name for output json file
 # states: optional parameter with state name, case insensitive and delimited by ',', eg: 'VA,MD'; input 'ALL' if want all states
 # conventional_conforming: optional parameter with valid inputs: 'ALL', 'Y', 'N'. case insenstive
 # year: optional parameter, case insensitive and delimited by ',', eg: '2012,2014'; input 'ALL' if want all years
@@ -88,7 +90,7 @@ print invalid_v1
 
 ### QUATION 3: visulization
 
-For a detailed answer for this question, please review file: question3_business_strategy_analysis.docx
+For a detailed analysis for this question, please review file: question3_business_strategy_analysis.docx
 code for graphs used in the doc is as follow:
 
 ```
